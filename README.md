@@ -1,83 +1,82 @@
-# Compress Image API 📸✨
+# 📸 API de Compressão de Imagens
 
-Este é um projeto de uma API em PHP que recebe uma imagem, comprime e retorna a versão otimizada da imagem. A API suporta os formatos **JPEG**, **PNG** e **GIF**. A compressão é realizada utilizando técnicas padrão de compressão de imagens com o objetivo de reduzir o tamanho do arquivo sem perda significativa de qualidade.
+A **API de Compressão de Imagens** permite o upload de imagens para compressão e retorna a imagem comprimida em formato Base64. É possível controlar a qualidade da compressão diretamente no código.
+# ⚙️ **Requisitos**
 
-## Funcionalidades
+* PHP 7.4 ou superior
+* Composer para gerenciar as dependências do PHP
+* Ferramentas de Compressão de Imagem:
 
-- **Upload de Imagem**: A API aceita imagens nos formatos JPEG, PNG e GIF.
-- **Compressão de Imagem**: A imagem é comprimida para reduzir seu tamanho.
-- **Retorno de Imagem em Base64**: Após a compressão, a imagem comprimida é retornada ao usuário no formato **Base64**.
-  
-## Tecnologias Utilizadas
+  *  🖼️ jpegoptim
+  *  🖼️ optipng
+  *  🖼️ pngquant
+  *  🖼️ gifsicle
+### 📦 Dependências do Composer
 
-- **PHP 7.4 ou superior**: A API foi desenvolvida com PHP.
-- **Bibliotecas PHP para Compressão**:
-  - `jpegoptim` para otimizar imagens JPEG.
-  - `optipng` para otimizar imagens PNG.
-  - `pngquant` para compressão adicional de PNG.
-  - `gifsicle` para compressão de GIFs.
+As dependências PHP necessárias para o funcionamento da API são:
 
-## Instalação
+   1. **spatie/image-optimizer**: Biblioteca para otimizar imagens.
 
-### 1. Clone o repositório
+  Instalação:
+```bash
+composer require spatie/image-optimizer
+```
+  2. **symfony/http-foundation**: Para manipulação de requisições HTTP e respostas.
 
-Clone o repositório para o seu ambiente local:
+Instalação:
 
 ```bash
-git clone https://github.com/seuusuario/compress-image-api.git
+    composer require symfony/http-foundation
+````
+# ⚙️ **Configuração**
+### 1. 📥 Clonar o Repositório
+
+Clone o repositório para o seu ambiente local:
+```bash
+git clone https://github.com/seu-usuario/compress-image-api.git
 cd compress-image-api
 ```
-### 2. Instale as dependências do Composer
-
-Para instalar as dependências do Composer, execute o seguinte comando dentro do diretório do projeto:
+### 2. 📦  Instalar as Dependências
+Se o Composer ainda não estiver instalado, siga as instruções aqui para instalar.
+Instale as dependências do projeto:
 ```bash
 composer install
 ```
-### 3. Instale as ferramentas de compressão de imagem
+## 3. 🛠️ **Instalar as Ferramentas de Compressão de Imagem**
 
-Se você estiver utilizando Windows, pode instalar as ferramentas necessárias com o Chocolatey:
-```bash
-choco install jpegoptim optipng pngquant gifsicle
-```
-Para Linux ou Mac, você pode instalar as ferramentas com os seguintes comandos:
+Para garantir que a compressão de imagens funcione corretamente, é necessário instalar as ferramentas de compressão no seu sistema:
+
+Para sistemas Debian/Ubuntu:
+
 ```bash
 sudo apt-get install jpegoptim optipng pngquant gifsicle
 ```
-### 4. Configuração do Servidor Local
+## 🚀 **Enviar uma Imagem**
 
-A API pode ser executada em um servidor local utilizando o Laragon, XAMPP, ou qualquer outro servidor PHP local.
+Para enviar uma imagem para a API, realize uma requisição **POST** para o endpoint /index.php, incluindo o arquivo de imagem no corpo da requisição. O campo da imagem deve ser chamado image.
+### 🔄 Exemplo de Requisição cURL
 
-  * Coloque o projeto no diretório de servidor (exemplo: C:\laragon\www\compress-image-api\).
-  * Abra o navegador e acesse: http://localhost/compress-image-api/public.
-
-## Endpoints
-
-### POST /compress-image
-
-Descrição
-
-Comprime uma imagem enviada e retorna a versão comprimida em formato Base64.
-
-Parâmetros
-
-  * image: Arquivo de imagem (JPEG, PNG, GIF). O arquivo é enviado como multipart/form-data.
-    
-Exemplo de Requisição
+No terminal, você pode usar o comando cURL para enviar a imagem:
 ```bash
-POST /compress-image
-Content-Type: multipart/form-data
-{
-  "image": "path_to_image_file.jpg"
-}
+curl -X POST -F "image=@/caminho/para/imagem.jpg" http://localhost:8000/index.php
 ```
-Exemplo de Resposta
+
+* **image=@/caminho/para/imagem.jpg**: Substitua **"/caminho/para/imagem.jpg"** pelo caminho local da imagem que você deseja enviar.
+
+Este comando enviará a imagem para o servidor local e processará a compressão.
+
+### 📦 Resposta da API
+
+Após o processamento da imagem, a API retornará um JSON contendo a imagem comprimida em formato Base64 e o caminho para acessá-la diretamente no servidor.
+
+### 📝 Exemplo de Resposta
+
+A resposta JSON será semelhante a esta:
 ```bash
 {
-  "message": "Imagem processada com sucesso.",
-  "file": "base64_encoded_image_string"
+    "compressed_image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+    "image_url": "/compressed/compressed_image_name.jpg"
 }
 ```
-**Erros**
-
-  * **500** - Erro interno do servidor: Quando ocorre um erro durante o processamento da imagem.
-  * **400** - Requisição inválida: Caso não seja enviado um arquivo de imagem válido.
+* **compressed_image**: A imagem comprimida, codificada em Base64. Você pode usar essa string diretamente em páginas web ou outros aplicativos que aceitem esse formato.
+* **image_url**: O caminho para acessar a imagem comprimida no servidor. A imagem estará salva na pasta compressed, e você pode acessá-la através dessa URL.
