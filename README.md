@@ -42,7 +42,7 @@ Instale as dependências do projeto:
 ```bash
 composer install
 ```
-## 3. 🛠️ **Instalar as Ferramentas de Compressão de Imagem**
+### 3. 🛠️ **Instalar as Ferramentas de Compressão de Imagem**
 
 Para garantir que a compressão de imagens funcione corretamente, é necessário instalar as ferramentas de compressão no seu sistema:
 
@@ -51,7 +51,7 @@ Para sistemas Debian/Ubuntu:
 ```bash
 sudo apt-get install jpegoptim optipng pngquant gifsicle
 ```
-## 🚀 **Enviar uma Imagem**
+### 🚀 **Enviar uma Imagem**
 
 Para enviar uma imagem para a API, realize uma requisição **POST** para o endpoint /index.php, incluindo o arquivo de imagem no corpo da requisição. O campo da imagem deve ser chamado image.
 ### 🔄 Exemplo de Requisição cURL
